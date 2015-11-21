@@ -41,14 +41,18 @@
 	</form>
 	{{/if}}
 	<ul>
+    {{#if isEmpty}}
+          <span class="text">sorry, nothing to show yet :-( but you can help by entering a new todo!</span>
+    {{else}}
 		{{#each todos}}
 			<li class="{{#if checked}}box-is-checked{{/if}}">
 				{{#if currentUser}}
-				<button class="delete-todo">&times;</button>
-				<input type="checkbox" checked="{{checked}}" class="toggle-checked">
+                    <button class="delete-todo">&times;</button>
+                    <input type="checkbox" checked="{{checked}}" class="toggle-checked">
 				{{/if}}
-				<span class="text">{{text}}, from {{username}}</span>
+                <span class="text">{{text}}, from {{username}}</span>
 			</li>
 		{{/each}}
+    {{/if}}
 	</ul>
 </template>

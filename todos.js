@@ -5,9 +5,20 @@ if (Meteor.isClient) {
 	Meteor.subscribe("todos");
  
 	Template.main.helpers({
-	  todos: function(){
+		todos: function(){
 		  return Todos.find({}, {sort: {createdAt: -1}});
-	  }
+		},
+
+		isEmpty: function(){
+			console.log("isEmpty entered");
+			if(Todos.find().fetch() == ""){
+				console.log("isEmpty true");
+				return true;
+			} else {
+				console.log("isEmpty false");
+				return false;
+			}
+		}
   	});
   
   	Template.main.events({
@@ -39,11 +50,15 @@ if (Meteor.isClient) {
 
 if(Meteor.isServer){
 	Meteor.publish("todos", function(){
+		var theTodos = [];
+
 		if(!this.userId){
-			return Todos.find();
+			theTodos = Todos.find();
 		} else {
-			return Todos.find({userId: this.userId});
+			theTodos = Todos.find({userId: this.userId});
  		}
+
+		return theTodos;
 	});
 }
 
